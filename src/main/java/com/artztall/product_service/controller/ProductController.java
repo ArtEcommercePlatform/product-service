@@ -31,7 +31,7 @@ public class ProductController {
     })
     public ResponseEntity<ProductResponse> createProduct(
             @RequestBody ProductRequest productRequest,
-            @RequestHeader("X-Artist-ID") String artistId) {
+            @RequestHeader("Artist-ID") String artistId) {
         ProductResponse response = productService.createProduct(productRequest, artistId);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
