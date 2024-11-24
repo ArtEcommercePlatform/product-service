@@ -1,5 +1,6 @@
 package com.artztall.product_service.controller;
 
+import com.artztall.product_service.dto.AvailabilityUpdateRequest;
 import com.artztall.product_service.dto.ProductRequest;
 import com.artztall.product_service.dto.ProductResponse;
 import com.artztall.product_service.service.ProductService;
@@ -89,5 +90,36 @@ public class ProductController {
             @RequestParam Double maxPrice) {
         List<ProductResponse> response = productService.getProductsByPriceRange(minPrice, maxPrice);
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}/availability")
+    @Operation(summary = "Update product availability", description = "Update Product availability.")
+    public ResponseEntity<ProductResponse> updateProductAvailability(
+            @PathVariable String id,
+            @RequestBody AvailabilityUpdateRequest request) {
+        ProductResponse updatedProduct = productService.updateProductAvailability(id, request.isAvailable());
+        return ResponseEntity.ok(updatedProduct);
+    }
+
+    @PutMapping("/{id}/reserve")
+    @Operation(summary = "Reserve Product", description = "Reserve Product.")
+    public ResponseEntity<ProductResponse> reserveProduct(@PathVariable String id) {
+        try {
+            ProductResponse response = productService.reserveProduct(id);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/{id}/release")
+    @Operation(summary = "Release product ", description = "Release Product.")
+    public ResponseEntity<ProductResponse> releaseProduct(@PathVariable String id) {
+        try {
+            ProductResponse response = productService.releaseProduct(id);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

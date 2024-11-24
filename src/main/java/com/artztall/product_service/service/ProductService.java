@@ -17,5 +17,8 @@ public interface ProductService {
     List<ProductResponse> getProductsByArtist(String artistId);
     List<ProductResponse> getProductsByCategory(String category);
     List<ProductResponse> getProductsByPriceRange(Double minPrice, Double maxPrice);
+    ProductResponse updateProductAvailability(String id, boolean available);
+    ProductResponse reserveProduct(String productId);
+    ProductResponse releaseProduct(String productId);
 
 }

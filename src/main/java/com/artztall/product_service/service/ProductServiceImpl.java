@@ -46,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
         return mapToProductResponse(updatedProduct);
     }
 
+
     @Override
     public void deleteProduct(String id) {
         productRepository.deleteById(id);
@@ -86,7 +87,46 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public ProductResponse updateProductAvailability(String id, boolean available) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 
+        product.setAvailable(available);
+        product.setUpdatedAt(LocalDateTime.now());
+
+        Product updatedProduct = productRepository.save(product);
+        return mapToProductResponse(updatedProduct);
+    }
+
+
+    @Override
+    public ProductResponse reserveProduct(String productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        if (!product.isAvailable()) {
+            throw new RuntimeException("Product is not available for purchase");
+        }
+
+        product.setAvailable(false);
+        product.setUpdatedAt(LocalDateTime.now());
+
+        Product updatedProduct = productRepository.save(product);
+        return mapToProductResponse(updatedProduct);
+    }
+
+    @Override
+    public ProductResponse releaseProduct(String productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        product.setAvailable(true);
+        product.setUpdatedAt(LocalDateTime.now());
+
+        Product updatedProduct = productRepository.save(product);
+        return mapToProductResponse(updatedProduct);
+    }
 
     private Product mapToProduct(ProductRequest productRequest){
         Product product = new Product();
