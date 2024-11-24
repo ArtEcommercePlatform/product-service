@@ -17,7 +17,7 @@ public class ProductRequest {
     private String description;
 
     @Schema(description = "price of the art")
-    private BigDecimal price;
+    private double price;
 
     @Schema(description = "category of the art")
     private String category;

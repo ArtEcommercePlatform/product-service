@@ -16,7 +16,7 @@ public class Product {
     private String id;
     private String name;
     private String description;
-    private BigDecimal price;
+    private double price;
     private String artistId;
     private String category;
     private List<String> tags;
