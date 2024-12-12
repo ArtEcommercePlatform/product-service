@@ -128,6 +128,13 @@ public class ProductServiceImpl implements ProductService {
         return mapToProductResponse(updatedProduct);
     }
 
+    @Override
+    public List<ProductResponse> searchProducts(String searchTerm) {
+        return productRepository.searchProducts(searchTerm).stream()
+                .map(this::mapToProductResponse)
+                .collect(Collectors.toList());
+    }
+
     private Product mapToProduct(ProductRequest productRequest){
         Product product = new Product();
         product.setName(productRequest.getName());

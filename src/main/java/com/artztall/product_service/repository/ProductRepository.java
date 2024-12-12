@@ -17,4 +17,11 @@ public interface ProductRepository extends MongoRepository<Product, String> {
 
     @Query("{'price': {$gte: ?0, $lte: ?1}}")
     List<Product> findByPriceRange(Double minPrice, Double maxPrice);
+
+    @Query("{ $or: [ " +
+            "  { name: { $regex: ?0, $options: 'i' } }, " +
+            "  { description: { $regex: ?0, $options: 'i' } }, " +
+            "  { tags: { $regex: ?0, $options: 'i' } } " +
+            "]}")
+    List<Product> searchProducts(String searchTerm);
 }

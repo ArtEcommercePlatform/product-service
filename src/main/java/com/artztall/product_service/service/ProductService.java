@@ -20,5 +20,6 @@ public interface ProductService {
     ProductResponse updateProductAvailability(String id, boolean available);
     ProductResponse reserveProduct(String productId);
     ProductResponse releaseProduct(String productId);
+    List<ProductResponse> searchProducts(String searchTerm);
 
 }

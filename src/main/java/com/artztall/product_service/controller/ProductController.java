@@ -122,4 +122,14 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
+    @GetMapping("/search")
+    @Operation(summary = "Search products", description = "Search products by name, description, or tags")
+    public ResponseEntity<List<ProductResponse>> searchProducts(
+            @RequestParam String query) {
+        List<ProductResponse> response = productService.searchProducts(query);
+        return ResponseEntity.ok(response);
+    }
+
 }
